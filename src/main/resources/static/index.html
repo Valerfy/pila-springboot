@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Estudiantes - Pila</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f2f2f2;
+            margin: 0;
+            padding: 30px;
+        }
+
+        .contenedor {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .formulario {
+            display: grid;
+            gap: 10px;
+        }
+
+        input, select, button {
+            padding: 10px;
+            font-size: 15px;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        .botones {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        #resultado {
+            margin-top: 25px;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="contenedor">
+
+    <h1>Gestión de Estudiantes - Pila</h1>
+
+    <div class="formulario">
+
+        <input type="text" id="codigo" placeholder="Código" required>
+
+        <input type="text" id="nombres" placeholder="Nombres" required>
+
+        <input type="text" id="apellidos" placeholder="Apellidos" required>
+
+        <input type="email" id="email" placeholder="Email" required>
+
+        <input type="date" id="fechaNacimiento" name="fechaNacimiento" required>
+
+        <select id="genero" required>
+            <option value="">Seleccione género</option>
+            <option value="M">Masculino</option>
+            <option value="F">Femenino</option>
+        </select>
+
+    </div>
+
+    <div class="botones">
+
+        <button onclick="agregar()">Agregar</button>
+
+        <button onclick="quitar()">Quitar</button>
+
+        <button onclick="mostrar()">Mostrar</button>
+
+        <button onclick="tamanyo()">Tamaño</button>
+
+    </div>
+
+    <div id="resultado"></div>
+
+</div>
+
+<script>
+
+async function agregar() {
+
+    const codigo = document.getElementById("codigo").value.trim();
+    const nombres = document.getElementById("nombres").value.trim();
+    const apellidos = document.getElementById("apellidos").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const fechaNacimiento = document.getElementById("fechaNacimiento").value;
+    const genero = document.getElementById("genero").value;
+
+    if (!codigo || !nombres || !apellidos || !email || !fechaNacimiento || !genero) {
+        document.getElementById("resultado").innerText =
+            "Todos los campos son obligatorios";
+        return;
+    }
+
+    const datos = new URLSearchParams();
+
+    datos.append("codigo", codigo);
+    datos.append("nombres", nombres);
+    datos.append("apellidos", apellidos);
+    datos.append("email", email);
+    datos.append("fechaNacimiento", fechaNacimiento);
+    datos.append("genero", genero);
+
+    const respuesta = await fetch("/pila/agregar", {
+        method: "POST",
+        body: datos
+    });
+
+    const resultado = await respuesta.text();
+    document.getElementById("resultado").innerText = resultado;
+}
+
+
+async function quitar() {
+
+    const respuesta = await fetch("/pila/quitar", {
+        method: "POST"
+    });
+
+    const resultado = await respuesta.text();
+
+    document.getElementById("resultado").innerText = resultado;
+}
+
+
+async function mostrar() {
+
+    const respuesta = await fetch("/pila/mostrar");
+
+    const estudiantes = await respuesta.json();
+
+    if (estudiantes.length === 0) {
+        document.getElementById("resultado").innerText =
+            "La pila está vacía";
+        return;
+    }
+
+    let texto = "ESTUDIANTES EN LA PILA\n\n";
+
+    estudiantes.reverse().forEach((estudiante, indice) => {
+
+        texto += "Código: " + estudiante.codigo + "\n";
+        texto += "Nombre: " + estudiante.nombres + " " +
+                 estudiante.apellidos + "\n";
+        texto += "Email: " + estudiante.email + "\n";
+        texto += "Fecha de nacimiento: " +
+                 estudiante.fechaNacimiento + "\n";
+        texto += "Género: " + estudiante.genero + "\n";
+        texto += "-------------------------\n";
+    });
+
+    document.getElementById("resultado").innerText = texto;
+}
+
+
+async function tamanyo() {
+
+    const respuesta = await fetch("/pila/tamanyo");
+
+    const resultado = await respuesta.text();
+
+    document.getElementById("resultado").innerText = resultado;
+}
+
+</script>
+
+</body>
+</html>
