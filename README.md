@@ -1,27 +1,27 @@
 # Pila Spring Boot
 
-## ¿De qué trata?
+## Sobre el proyecto
 
-Este proyecto es una aplicación web hecha con **Java 27 y Spring Boot** para trabajar con una estructura de datos tipo Pila.
+Este es un proyecto hecho en **Java 27 con Spring Boot** para trabajar con una estructura de datos tipo pila.
 
-La aplicación permite agregar estudiantes y realizar las operaciones:
+La aplicación permite registrar estudiantes y hacer las operaciones básicas de una pila:
 
 * Agregar
 * Quitar
 * Mostrar
-* Tamaño
+* Ver el tamaño
 
-La pila está hecha usando un arreglo y funciona con el método **LIFO**, es decir, el último estudiante que entra es el primero que sale.
+La pila funciona con **LIFO**, por lo que el último estudiante agregado es el primero en salir.
 
 ## Requisitos
 
-Para poder ejecutar el proyecto se necesita:
+Para ejecutar el proyecto se necesita:
 
-* Java JDK 27
+* Java 27
 * Un navegador
-* El proyecto descargado
+* Git
 
-El proyecto ya tiene Maven Wrapper, así que no hace falta instalar Maven aparte.
+No es necesario instalar Maven porque el proyecto ya incluye Maven Wrapper.
 
 Para comprobar Java:
 
@@ -29,61 +29,53 @@ Para comprobar Java:
 java -version
 ```
 
-## Descargar el proyecto
+## Cómo ejecutar
 
-Si el proyecto está en GitHub o GitLab, se puede descargar con:
+Primero clonamos el proyecto:
 
 ```bash
-git clone URL_DEL_REPOSITORIO
+git clone https://github.com/Valerfy/pila-springboot.git
 ```
 
-Después entramos a la carpeta:
+Entramos a la carpeta:
 
 ```bash
 cd pila-springboot
 ```
 
-## Compilar
-
-Abrimos la terminal dentro de la carpeta del proyecto y ejecutamos:
+Después compilamos:
 
 ```bash
 .\mvnw.cmd clean package
 ```
 
-Si todo está bien, al final debe aparecer:
+Si todo está bien, debe aparecer:
 
 ```text
 BUILD SUCCESS
 ```
 
-## Ejecutar
-
-Después de compilar, ejecutamos:
-
-```bash
-java -jar target\pila-0.0.1-SNAPSHOT.jar
-```
-
-También se puede iniciar con:
+Para iniciar el proyecto:
 
 ```bash
 .\mvnw.cmd spring-boot:run
 ```
 
-## Abrir la página
+También se puede ejecutar el `.jar` generado:
 
-Cuando el proyecto esté ejecutándose, abrimos el navegador y entramos a:
+```bash
+java -jar target\pila-0.0.1-SNAPSHOT.jar
+```
+
+Cuando esté iniciado, entramos desde el navegador a:
 
 ```text
 http://localhost:8080
 ```
 
-## ¿Cómo se usa?
+## Cómo usarlo
 
-### Agregar
-
-Se llenan los datos del estudiante:
+Para agregar un estudiante se deben llenar todos los campos:
 
 * Código
 * Nombres
@@ -94,94 +86,33 @@ Se llenan los datos del estudiante:
 
 Después se presiona **Agregar**.
 
-### Mostrar
+También están los botones:
 
-Presionando **Mostrar** se pueden ver los estudiantes que están actualmente en la pila.
+**Mostrar:** muestra los estudiantes que están en la pila.
 
-### Quitar
+**Quitar:** elimina el último estudiante que se agregó.
 
-Con **Quitar** se elimina el último estudiante que se agregó.
-
-Por ejemplo:
-
-```text
-Estudiante 1
-Estudiante 2
-Estudiante 3
-```
-
-Si presionamos Quitar, sale primero el **Estudiante 3**.
-
-### Tamaño
-
-Con **Tamaño** podemos saber cuántos estudiantes hay actualmente en la pila.
-
-Por ejemplo:
-
-```text
-Tamaño de la pila: 3
-```
-
-## Capacidad
+**Tamaño:** muestra cuántos estudiantes hay en la pila.
 
 La pila tiene espacio para **20 estudiantes**.
 
-Esto está definido en el controlador con:
-
-```java
-new Pila(20)
-```
-
 ## Archivos principales
 
-```text
-PilaApplication.java
-```
+**PilaApplication.java:** inicia la aplicación.
 
-Es el archivo que inicia el proyecto.
+**Estudiante.java:** contiene los datos del estudiante.
 
-```text
-Estudiante.java
-```
+**Pila.java:** contiene la implementación de la pila usando un arreglo. Aquí están los métodos `agregar()`, `quitar()`, `mostrar()` y `tamanyo()`.
 
-Aquí están los datos del estudiante.
+**PilaController.java:** recibe las acciones que se hacen desde la página y las conecta con la pila.
 
-```text
-Pila.java
-```
+**index.html:** es la página que se utiliza para ingresar los estudiantes y probar las operaciones.
 
-Aquí se encuentra la estructura de la pila y sus métodos:
-
-* agregar()
-* quitar()
-* mostrar()
-* tamanyo()
-
-```text
-PilaController.java
-```
-
-Se encarga de conectar la página web con las funciones de la pila.
-
-```text
-index.html
-```
-
-Es la página donde se ingresan los estudiantes y se usan los botones.
-
-```text
-application.properties
-```
-
-Aquí está la configuración básica del proyecto.
+**application.properties:** contiene la configuración básica del proyecto.
 
 ## Repositorio
 
-El proyecto se encuentra en un repositorio público de GitHub o GitLab.
-
-```text
-PEGAR_AQUÍ_EL_ENLACE
-```
+https://github.com/Valerfy/pila-springboot.git
 
 ## Autor
 
